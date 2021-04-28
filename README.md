@@ -121,3 +121,94 @@ public:
     }
 };
 ```
+
+
+3)
+
+
+Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+Example 1:
+
+Input: nums = [-4,-1,0,3,10]
+Output: [0,1,9,16,100]
+Explanation: After squaring, the array becomes [16,1,0,9,100].
+After sorting, it becomes [0,1,9,16,100].
+Example 2:
+
+Input: nums = [-7,-3,2,3,11]
+Output: [4,9,9,49,121]
+ 
+
+Constraints:
+
+1 <= nums.length <= 104
+-104 <= nums[i] <= 104
+nums is sorted in non-decreasing order.
+
+```
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) 
+    {
+        vector<int> sortedVec;
+        for(auto num : nums)
+        {
+            sortedVec.push_back(num*num);
+        }
+        sort(sortedVec.begin(), sortedVec.end());
+        return sortedVec;
+    }
+};
+```
+
+```
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) 
+    {
+        int cnt = 0;
+        
+        for(const auto& num : nums)
+        {
+            nums[cnt] = num*num;
+            cnt++;
+        }
+        quickSort(nums, 0, cnt-1);
+        
+        return nums;
+    }
+    
+    void quickSort(vector<int>& nums, int start, int end)
+    {
+        if(start >= end)
+        {
+            return;
+        }
+        
+        int i = start-1;
+        int j = start;
+        int& pivot = nums[end];
+        for(; j<end; ++j)
+        {
+            if(nums[j] < pivot)
+            {
+                swap(nums[++i], nums[j]);
+            }
+        }
+        swap(nums[++i], pivot);
+        
+        quickSort(nums, start, i-1);
+        quickSort(nums, i+1, end);       
+    }
+    
+    void swap(int &a, int &b)
+    {
+        int t = a; 
+        a = b; 
+        b = t;
+    }
+
+};
+```
+
